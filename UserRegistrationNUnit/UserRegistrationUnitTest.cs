@@ -70,14 +70,14 @@ namespace UserRegistrationNUnit
         [Test]
         public void GivenPassword_WhenValid_ShouldReturnTrue()
         {
-            bool result = userRegistration.ValidatePassword("hvjh8vJJbkbk");
+            bool result = userRegistration.ValidatePassword("hvjh8vJ&Jbkbk");
             Assert.IsTrue(result);
         }
 
         [Test]
         public void GivenPassword_WhenInvalid_ShouldReturnTrue()
         {
-            bool result = userRegistration.ValidatePassword("ffwefHHKkwnfw");
+            bool result = userRegistration.ValidatePassword("ffwefH(*HKkwnfw");
             Assert.IsFalse(result);
         }
     }
