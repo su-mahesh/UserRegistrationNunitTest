@@ -59,10 +59,25 @@ namespace UserRegistrationNUnit
             bool result = userRegistration.ValidateMobileNumber("91 4959399432");
             Assert.IsTrue(result);
         }
+
         [Test]
         public void GivenMobileNumber_WhenInvalid_ShouldReturnFalse()
         {
             bool result = userRegistration.ValidateMobileNumber("914959399432");
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void GivenPassword_WhenValid_ShouldReturnTrue()
+        {
+            bool result = userRegistration.ValidatePassword("lknflkwnfw");
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void GivenPassword_WhenInvalid_ShouldReturnTrue()
+        {
+            bool result = userRegistration.ValidatePassword("lkwnfw");
             Assert.IsFalse(result);
         }
     }
