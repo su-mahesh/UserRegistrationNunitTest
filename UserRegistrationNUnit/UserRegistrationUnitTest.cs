@@ -38,5 +38,19 @@ namespace UserRegistrationNUnit
             bool result = userRegistration.ValidateLastName("kangude");
             Assert.IsFalse(result);
         }
+
+        [Test]
+        public void GivenEmailAddress_WhenValid_ShouldReturnTrue()
+        {
+            bool result = userRegistration.ValidateEmailAddress("abc.100@yahoo.com");
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void GivenEmailAddress_WhenInalid_ShouldReturnFalse()
+        {
+            bool result = userRegistration.ValidateEmailAddress("abc.100.@yahoo.com");
+            Assert.IsFalse(result);
+        }
     }
 }
