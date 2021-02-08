@@ -12,10 +12,17 @@ namespace UserRegistrationNUnit
         }
 
         [Test]
-        public void GivenFirstName_WhenProper_ShouldReturnTrue()
+        public void GivenFirstName_WhenValid_ShouldReturnTrue()
         {
             bool result = userRegistration.ValidateFirstName("Mahesh");
             Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void GivenFirstName_WhenInvalid_ShouldReturnFalse()
+        {
+            bool result = userRegistration.ValidateFirstName("MAHESH");
+            Assert.IsFalse(result);
         }
     }
 }

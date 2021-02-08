@@ -5,7 +5,7 @@ namespace UserRegistrationNameSpace
 {
     public class UserRegistrationRegex
     {
-        public Regex FirstNameRegex = new Regex(@"^[A-Z][a-zA-Z]{2,}$");
+        public Regex FirstNameRegex = new Regex(@"^[A-Z][a-z]{2,}$");
 
         public bool ValidateFirstName(string FirstName)
         {
