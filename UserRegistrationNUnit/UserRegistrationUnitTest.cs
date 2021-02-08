@@ -47,9 +47,22 @@ namespace UserRegistrationNUnit
         }
 
         [Test]
-        public void GivenEmailAddress_WhenInalid_ShouldReturnFalse()
+        public void GivenEmailAddress_WhenInvalid_ShouldReturnFalse()
         {
             bool result = userRegistration.ValidateEmailAddress("abc.100.@yahoo.com");
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void GivenMobileNumber_WhenValid_ShouldReturnTrue()
+        {
+            bool result = userRegistration.ValidateMobileNumber("91 4959399432");
+            Assert.IsTrue(result);
+        }
+        [Test]
+        public void GivenMobileNumber_WhenInvalid_ShouldReturnFalse()
+        {
+            bool result = userRegistration.ValidateMobileNumber("914959399432");
             Assert.IsFalse(result);
         }
     }
