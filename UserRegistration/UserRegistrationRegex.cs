@@ -11,17 +11,13 @@ namespace UserRegistrationNameSpace
         public static Regex MobileNumberRegex = new Regex(@"^[0-9]{2,3}\s[1-9][0-9]{9}$");
         public static Regex PasswordRegex = new Regex(@"^(?=.{8,20}$)(?=.*[\d])(?=.*[A-Z])[\w]*[\W][\w]*$");
 
-        Predicate<String> IsValidFirstName = (input => FirstNameRegex.IsMatch(input));
-        Predicate<String> IsValidLastName = (input => LastNameRegex.IsMatch(input));
-        Predicate<String> IsValidLastEmailAddress = (input => EmailAddressRegex.IsMatch(input));
-        Predicate<String> IsValidMobileNumber = (input => MobileNumberRegex.IsMatch(input));
-        Predicate<String> IsValidLastPassword = (input => PasswordRegex.IsMatch(input));
+        Func<string, Regex, bool> IsValid = (field, reg) => reg.IsMatch(field);
 
         public bool ValidateFirstName(string FirstName)
         {
             try
             {
-                if (!IsValidFirstName(FirstName))
+                if (!IsValid(FirstName, FirstNameRegex))
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_FIRST_NAME, "invalid first name");
                 return FirstNameRegex.IsMatch(FirstName);
 
@@ -36,7 +32,7 @@ namespace UserRegistrationNameSpace
         {
             try
             {
-                if (!IsValidLastName(LastName))
+                if (!IsValid(LastName, LastNameRegex))
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_LAST_NAME, "invalid last name");
                 return LastNameRegex.IsMatch(LastName);
             }
@@ -50,7 +46,7 @@ namespace UserRegistrationNameSpace
         {
             try
             {
-                if (!IsValidLastEmailAddress(EmailAddress))
+                if (!IsValid(EmailAddress, EmailAddressRegex))
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_EMAIL, "invalid email");
                 return EmailAddressRegex.IsMatch(EmailAddress);
 
@@ -65,7 +61,7 @@ namespace UserRegistrationNameSpace
         {
             try
             {
-                if (!IsValidMobileNumber(MobileNumber))
+                if (!IsValid(MobileNumber, MobileNumberRegex))
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_MOBILE_NUMBER, "invalid mobile number");
                 return MobileNumberRegex.IsMatch(MobileNumber);
             }
@@ -79,7 +75,7 @@ namespace UserRegistrationNameSpace
         {
             try
             {
-                if (!IsValidLastPassword(Password))
+                if (!IsValid(Password, PasswordRegex))
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_PASSWORD, "invalid password");
                 return PasswordRegex.IsMatch(Password);
             }
