@@ -41,8 +41,28 @@ namespace UserRegistrationNUnit
 
         public void GivenParameterizedEmailAddress_WhenInvalidOrValid_ShouldReturnExpected(String email, bool expected)
         {
-            bool result = userRegistration.ValidateEmailAddress(email);
-            Assert.AreEqual(expected, result);
+            try
+            {
+                bool result = userRegistration.ValidateEmailAddress(email);
+                Assert.AreEqual(expected, result);
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_EMAIL, exception.exceptionType);
+            }
+           
+            
+        }
+        public void GivenEmailAddress_WhenInvalid_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateEmailAddress("abc.100.@yahoo.com");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_EMAIL, exception.exceptionType);
+            }
         }
     }
 }
