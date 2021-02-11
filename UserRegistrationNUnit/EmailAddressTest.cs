@@ -38,7 +38,6 @@ namespace UserRegistrationNUnit
         [TestCase("abc@abc@gmail.com", false)]
         [TestCase("abc@gmail.com.1a", false)]
         [TestCase("abc@gmail.com.aa.au", false)]
-
         public void GivenParameterizedEmailAddress_WhenInvalidOrValid_ShouldReturnExpected(String email, bool expected)
         {
             try
@@ -49,20 +48,7 @@ namespace UserRegistrationNUnit
             catch (UserRegistrationException exception)
             {
                 Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_EMAIL, exception.exceptionType);
-            }
-           
-            
-        }
-        public void GivenEmailAddress_WhenInvalid_ShouldThrowCustomException()
-        {
-            try
-            {
-                bool result = userRegistration.ValidateEmailAddress("abc.100.@yahoo.com");
-            }
-            catch (UserRegistrationException exception)
-            {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_EMAIL, exception.exceptionType);
-            }
+            }                      
         }
     }
 }
