@@ -26,10 +26,10 @@ namespace UserRegistrationNUnit
             {
                 bool result = userRegistration.ValidateFirstName("kangude");
             }
-            catch(UserRegistrationException exception)
+            catch (UserRegistrationException exception)
             {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_FIRST_NAME, exception.exceptionType);
-            }           
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, exception.exceptionType);
+            }
         }
 
         [Test]
@@ -40,78 +40,13 @@ namespace UserRegistrationNUnit
         }
 
         [Test]
-        public void GivenLastName_WhenInvalid_ShouldThrowCustomException()
-        {
-            try
-            {
-                bool result = userRegistration.ValidateLastName("kangude");
-            }
-            catch (UserRegistrationException exception)
-            {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_LAST_NAME, exception.exceptionType);
-            }
-        }
-
-        [Test]
         public void GivenEmailAddress_WhenValid_ShouldReturnTrue()
         {
             bool result = userRegistration.ValidateEmailAddress("abc.100@yahoo.com");
             Assert.IsTrue(result);
         }
 
-        [Test]
-        public void GivenEmailAddress_WhenInvalid_ShouldThrowCustomException()
-        {
-            try
-            {
-                bool result = userRegistration.ValidateEmailAddress("abc.100.@yahoo.com");
-            }
-            catch (UserRegistrationException exception)
-            {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_EMAIL, exception.exceptionType);
-            }
-        }
-
-        [Test]
-        public void GivenMobileNumber_WhenValid_ShouldReturnTrue()
-        {
-            bool result = userRegistration.ValidateMobileNumber("91 4959399432");
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void GivenMobileNumber_WhenInvalid_ShouldThrowCustomException()
-        {            
-            try
-            {
-                bool result = userRegistration.ValidateMobileNumber("914959399432");
-            }
-            catch (UserRegistrationException exception)
-            {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_MOBILE_NUMBER, exception.exceptionType);
-            }
-        }
-
-        [Test]
-        public void GivenPassword_WhenValid_ShouldReturnTrue()
-        {
-            bool result = userRegistration.ValidatePassword("hvjh8vJ&Jbkbk");
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void GivenPassword_WhenInvalid_ShouldThrowCustomException()
-        {
-            try
-            {
-                bool result = userRegistration.ValidatePassword("ffwefH(*HKkwnfw");
-            }
-            catch (UserRegistrationException exception)
-            {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.INVALID_PASSWORD, exception.exceptionType);
-            }
-        }
-
+        // TEST CASES : TEST NULL INPUT
         [Test]
         public void GivenFirstName_WhenNull_ShouldThrowCustomException()
         {
@@ -121,7 +56,7 @@ namespace UserRegistrationNUnit
             }
             catch (UserRegistrationException exception)
             {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERD_NULL, exception.exceptionType);
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_NULL, exception.exceptionType);
             }
         }
 
@@ -134,7 +69,7 @@ namespace UserRegistrationNUnit
             }
             catch (UserRegistrationException exception)
             {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERD_NULL, exception.exceptionType);
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_NULL, exception.exceptionType);
             }
         }
 
@@ -147,7 +82,7 @@ namespace UserRegistrationNUnit
             }
             catch (UserRegistrationException exception)
             {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERD_NULL, exception.exceptionType);
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_NULL, exception.exceptionType);
             }
         }
 
@@ -160,7 +95,7 @@ namespace UserRegistrationNUnit
             }
             catch (UserRegistrationException exception)
             {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERD_NULL, exception.exceptionType);
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_NULL, exception.exceptionType);
             }
         }
 
@@ -173,7 +108,141 @@ namespace UserRegistrationNUnit
             }
             catch (UserRegistrationException exception)
             {
-                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERD_NULL, exception.exceptionType);
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_NULL, exception.exceptionType);
+            }
+        }
+
+        // TEST CASES : TEST EMPTY FIELD
+        [Test]
+        public void GivenFirstName_WhenEmpty_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateFirstName("");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_EMPTY, exception.exceptionType);
+            }
+        }
+
+        [Test]
+        public void GivenLastName_WhenEmpty_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateLastName("");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_EMPTY, exception.exceptionType);
+            }
+        }
+
+        [Test]
+        public void GivenEmailAddress_WhenEmpty_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateEmailAddress("");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_EMPTY, exception.exceptionType);
+            }
+        }
+
+        [Test]
+        public void GivenMobileNumber_WhenEmpty_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateMobileNumber("");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_EMPTY, exception.exceptionType);
+            }
+        }
+
+        [Test]
+        public void GivenPassword_WhenEmpty_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidatePassword("");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_EMPTY, exception.exceptionType);
+            }
+        }
+
+
+        // TEST CASES : TEST LESS THAN MINIMUM LENGTH
+
+        [Test]
+        public void GivenFirstName_WhenLessThanMinimumLength_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateFirstName("Ma");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, exception.exceptionType);
+            }
+        }
+
+        [Test]
+        public void GivenLastName_WhenLessThanMinimumLength_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateLastName("Ka");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, exception.exceptionType);
+            }
+        }
+
+        [Test]
+        public void GivenEmailAddress_WhenLessThanMinimumLength_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateEmailAddress("m@.co");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, exception.exceptionType);
+            }
+        }
+
+        [Test]
+        public void GivenMobileNumber_WhenLessThanMinimumLength_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidateMobileNumber("91 123456789");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, exception.exceptionType);
+            }
+        }
+
+        [Test]
+        public void GivenPassword_WhenLessThanMinimumLength_ShouldThrowCustomException()
+        {
+            try
+            {
+                bool result = userRegistration.ValidatePassword("b$vh7VK");
+            }
+            catch (UserRegistrationException exception)
+            {
+                Assert.AreEqual(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, exception.exceptionType);
             }
         }
     }

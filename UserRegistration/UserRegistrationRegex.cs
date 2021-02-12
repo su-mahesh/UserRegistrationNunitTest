@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace UserRegistrationNameSpace
@@ -17,14 +18,18 @@ namespace UserRegistrationNameSpace
         {
             try
             {
-                if (!IsValid(FirstName, FirstNameRegex))
-                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_FIRST_NAME, "invalid first name");
+                if (FirstName.Equals(string.Empty))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_EMPTY, "first name should not be empty");
+                if (FirstName.Any(Char.IsDigit))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_DIGIT_IN_NAME, "first name should not contain digits");
+                if (FirstName.Length < 3)
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "first name should not be less than minimum length");
                 return FirstNameRegex.IsMatch(FirstName);
 
             }
-            catch (ArgumentNullException)
+            catch (NullReferenceException)
             {
-                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERD_NULL, "entered null");
+                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_NULL, "first name should not be null");
             }
             
         }
@@ -32,57 +37,74 @@ namespace UserRegistrationNameSpace
         {
             try
             {
-                if (!IsValid(LastName, LastNameRegex))
-                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_LAST_NAME, "invalid last name");
+                if (LastName.Equals(string.Empty))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_EMPTY, "last name should not be empty");
+                if (LastName.Any(Char.IsDigit))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_DIGIT_IN_NAME, "last name should not contain digits");
+                if (LastName.Length < 3)
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "last name should not be less than minimum length");
                 return LastNameRegex.IsMatch(LastName);
             }
-            catch (ArgumentNullException)
+            catch (NullReferenceException)
             {
-                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERD_NULL, "entered null");
-            }
-            
+                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_NULL, "last name should not be null");
+            }            
         }
         public bool ValidateEmailAddress(string EmailAddress)
         {
             try
             {
-                if (!IsValid(EmailAddress, EmailAddressRegex))
-                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_EMAIL, "invalid email");
-                return EmailAddressRegex.IsMatch(EmailAddress);
+                if (EmailAddress.Equals(string.Empty))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_EMPTY, "email address should not be empty");
 
+                string Username = EmailAddress.Substring(0, 1);
+                if (Username.Any(Char.IsPunctuation))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_INVALID_EMAIL_USERNAME, "email address username should not start with spacial character");
+                 if (EmailAddress.Length < 6)
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "email address should not be less than minimum lengthe");
+                string Country_Tld = EmailAddress.Substring(EmailAddress.LastIndexOf(".") + 1);
+                if (Country_Tld.Any(Char.IsDigit))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_DIGIT_IN_COUNTRY_TLD, "email address country tld should not contain spacial characters");
+
+                string tld = EmailAddress.Substring(EmailAddress.LastIndexOf("@") + 1, EmailAddress.Substring(EmailAddress.LastIndexOf("@") + 1).IndexOf("."));
+                if (tld.Any(Char.IsPunctuation))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_INVALID_EMAIL_TLD, "email address tld should not be contain special characters");
+                return EmailAddressRegex.IsMatch(EmailAddress);
             }
-            catch (ArgumentNullException)
+            catch (NullReferenceException)
             {
-                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERD_NULL, "entered null");
+                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_NULL, "email address should not be null");
             }
-          
         }
         public bool ValidateMobileNumber(string MobileNumber)
         {
             try
             {
-                if (!IsValid(MobileNumber, MobileNumberRegex))
-                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_MOBILE_NUMBER, "invalid mobile number");
-                return MobileNumberRegex.IsMatch(MobileNumber);
+                if (MobileNumber.Length.Equals(0))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_EMPTY, "mobile number should not be empty");
+                if (MobileNumber.Length < 13)
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "mobile number should not be less than minimum length");
+                return LastNameRegex.IsMatch(MobileNumber);
             }
-            catch (ArgumentNullException)
-            {
-                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERD_NULL, "entered null");
+            catch (NullReferenceException)
+            { 
+                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_NULL, "mobile number should not be null");
             }
-
         }
         public bool ValidatePassword(string Password)
         {
             try
             {
-                if (!IsValid(Password, PasswordRegex))
-                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.INVALID_PASSWORD, "invalid password");
-                return PasswordRegex.IsMatch(Password);
+                if (Password.Length.Equals(0))
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_EMPTY, "password should not be empty");
+                if (Password.Length < 8)
+                    throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "password should not be less than minimum lengthe");
+                return LastNameRegex.IsMatch(Password);
             }
-            catch (ArgumentNullException)
+            catch (NullReferenceException)
             {
-                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERD_NULL, "entered null");
-            }            
+                throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_NULL, "password should not be null");
+            }           
         }
     }
 }
