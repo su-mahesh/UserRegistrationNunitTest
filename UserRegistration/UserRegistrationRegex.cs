@@ -12,7 +12,7 @@ namespace UserRegistrationNameSpace
         public static Regex MobileNumberRegex = new Regex(@"^[0-9]{2,3}\s[1-9][0-9]{9}$");
         public static Regex PasswordRegex = new Regex(@"^(?=.{8,20}$)(?=.*[\d])(?=.*[A-Z])[\w]*[\W][\w]*$");
 
-        Func<string, Regex, bool> IsValid = (field, reg) => reg.IsMatch(field);
+        Func<Regex, string, bool> IsValid = (reg, field) => reg.IsMatch(field);
 
         public bool ValidateFirstName(string FirstName)
         {
@@ -24,7 +24,7 @@ namespace UserRegistrationNameSpace
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_DIGIT_IN_NAME, "first name should not contain digits");
                 if (FirstName.Length < 3)
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "first name should not be less than minimum length");
-                return FirstNameRegex.IsMatch(FirstName);
+                return IsValid(FirstNameRegex, FirstName);
 
             }
             catch (NullReferenceException)
@@ -43,7 +43,7 @@ namespace UserRegistrationNameSpace
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_DIGIT_IN_NAME, "last name should not contain digits");
                 if (LastName.Length < 3)
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "last name should not be less than minimum length");
-                return LastNameRegex.IsMatch(LastName);
+                return IsValid(LastNameRegex, LastName);
             }
             catch (NullReferenceException)
             {
@@ -69,7 +69,7 @@ namespace UserRegistrationNameSpace
                 string tld = EmailAddress.Substring(EmailAddress.LastIndexOf("@") + 1, EmailAddress.Substring(EmailAddress.LastIndexOf("@") + 1).IndexOf("."));
                 if (tld.Any(Char.IsPunctuation))
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_INVALID_EMAIL_TLD, "email address tld should not be contain special characters");
-                return EmailAddressRegex.IsMatch(EmailAddress);
+                return IsValid(EmailAddressRegex, EmailAddress);
             }
             catch (NullReferenceException)
             {
@@ -84,7 +84,7 @@ namespace UserRegistrationNameSpace
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_EMPTY, "mobile number should not be empty");
                 if (MobileNumber.Length < 13)
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "mobile number should not be less than minimum length");
-                return LastNameRegex.IsMatch(MobileNumber);
+                return IsValid(LastNameRegex, MobileNumber);
             }
             catch (NullReferenceException)
             { 
@@ -99,7 +99,7 @@ namespace UserRegistrationNameSpace
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_EMPTY, "password should not be empty");
                 if (Password.Length < 8)
                     throw new UserRegistrationException(UserRegistrationException.ExceptionType.ENTERED_LESSTHAN_MINIMUM_LENGTH, "password should not be less than minimum lengthe");
-                return LastNameRegex.IsMatch(Password);
+                return IsValid(LastNameRegex, Password);
             }
             catch (NullReferenceException)
             {
